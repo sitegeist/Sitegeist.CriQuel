@@ -1,0 +1,16 @@
+Neos:
+  Fusion:
+    defaultContext:
+      crql: 'Sitegeist\CriQuel\Query::create'
+
+Sitegeist:
+  CriQuel:
+    operations:
+      add: 'Sitegeist\CriQuel\Operations\AddOperation'
+      remove: 'Sitegeist\CriQuel\Operations\RemoveOperation'
+      unique: 'Sitegeist\CriQuel\Operations\UniqueOperation'
+      children: 'Sitegeist\CriQuel\Operations\ChildrenOperation'
+      ancestors: 'Sitegeist\CriQuel\Operations\AncestorsOperation'
+      descendants: 'Sitegeist\CriQuel\Operations\DescendantsOperation'
+      withAncestors: 'Sitegeist\CriQuel\Operations\WithAncestorsOperation'
+      withDescendants: 'Sitegeist\CriQuel\Operations\WithDescendantsOperation'
