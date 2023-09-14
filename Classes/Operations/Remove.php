@@ -9,7 +9,7 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\NodeAccess\FlowQueryOperations\CreateNodeHashTrait;
 use Sitegeist\CriQuel\OperationInterface;
 
-class RemoveOperation implements OperationInterface
+class Remove implements OperationInterface
 {
     use CreateNodeHashTrait;
 

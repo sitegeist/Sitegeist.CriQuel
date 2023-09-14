@@ -10,7 +10,7 @@ use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\OperationInterface;
 
-final class WithDescendantsOperation implements OperationInterface
+final class WithDescendants implements OperationInterface
 {
     use FlattenSubtreeTrait;
 

@@ -10,7 +10,7 @@ use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\OperationInterface;
 
-class ChildrenOperation implements OperationInterface
+class Children implements OperationInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;

@@ -8,7 +8,7 @@ use Neos\ContentRepository\NodeAccess\FlowQueryOperations\CreateNodeHashTrait;
 use Sitegeist\CriQuel\OperationInterface;
 use Sitegeist\CriQuel\TransientOperationInterface;
 
-class UniqueOperation implements OperationInterface
+class Unique implements OperationInterface
 {
     use CreateNodeHashTrait;
 

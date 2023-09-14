@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace Sitegeist\CriQuel\Operations;
 
+use Neos\ContentRepository\Core\NodeType\NodeTypeNames;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindAncestorNodesFilter;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindReferencesFilter;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
+use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\OperationInterface;
+use Sitegeist\Taxonomy\Service\TaxonomyService;
 
-class WithAncestorsOperation implements OperationInterface
+class Ancestors implements OperationInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;
@@ -26,7 +31,7 @@ class WithAncestorsOperation implements OperationInterface
     public function apply(Nodes $nodes): Nodes
     {
         $findAncestorFilter = FindAncestorNodesFilter::create(
-            NodeTypeConstraints::fromFilterString($this->nodeTypeConstraints)
+            $this->nodeTypeConstraints
         );
 
         $ancestorNodesArray = [];

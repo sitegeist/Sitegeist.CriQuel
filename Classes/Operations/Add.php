@@ -7,7 +7,7 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Sitegeist\CriQuel\OperationInterface;
 use Sitegeist\CriQuel\TransientOperationInterface;
 
-class AddOperation implements OperationInterface
+class Add implements OperationInterface
 {
     private Nodes $nodes;
     public function __construct(Nodes|Node ...$items)
