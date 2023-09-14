@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sitegeist\CriQuel;
 
-use Sitegeist\CriQuel\OperationInterface;
+use Sitegeist\CriQuel\ProcessorInterface;
 
 class OperationResolver implements OperationResolverInterface
 {
@@ -15,7 +15,7 @@ class OperationResolver implements OperationResolverInterface
         $this->operations = $settings['operations'] ?? [];
     }
 
-    public function resolve(string $name, array $arguments): OperationInterface
+    public function resolve(string $name, array $arguments): ProcessorInterface|ExtractorInterface
     {
         if (array_key_exists($name, $this->operations)) {
             return new $this->operations[$name](...$arguments);

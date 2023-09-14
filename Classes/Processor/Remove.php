@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sitegeist\CriQuel\Operations;
+namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\NodeAccess\FlowQueryOperations\CreateNodeHashTrait;
-use Sitegeist\CriQuel\OperationInterface;
+use Sitegeist\CriQuel\ProcessorInterface;
 
-class Remove implements OperationInterface
+class Remove implements ProcessorInterface
 {
     use CreateNodeHashTrait;
 

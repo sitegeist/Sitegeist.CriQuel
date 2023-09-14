@@ -6,7 +6,7 @@ namespace Sitegeist\CriQuel;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 
-interface OperationInterface
+interface ProcessorInterface
 {
     public function apply(Nodes $nodes): Nodes;
 }

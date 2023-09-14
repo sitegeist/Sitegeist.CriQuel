@@ -6,11 +6,20 @@ Neos:
 Sitegeist:
   CriQuel:
     operations:
-      add: 'Sitegeist\CriQuel\Operations\Add'
-      remove: 'Sitegeist\CriQuel\Operations\Remove'
-      unique: 'Sitegeist\CriQuel\Operations\Unique'
-      children: 'Sitegeist\CriQuel\Operations\Children'
-      ancestors: 'Sitegeist\CriQuel\Operations\Ancestors'
-      descendants: 'Sitegeist\CriQuel\Operations\Descendants'
-      withAncestors: 'Sitegeist\CriQuel\Operations\WithAncestors'
-      withDescendants: 'Sitegeist\CriQuel\Operations\WithDescendants'
+      # Extractor operations
+      first: 'Sitegeist\CriQuel\Extractor\First'
+      last: 'Sitegeist\CriQuel\Extractor\First'
+      count: 'Sitegeist\CriQuel\Extractor\Count'
+      property: 'Sitegeist\CriQuel\Extractor\Property'
+      properties: 'Sitegeist\CriQuel\Extractor\Properties'
+
+      # Processor operation
+      add: 'Sitegeist\CriQuel\Processor\Add'
+      remove: 'Sitegeist\CriQuel\Processor\Remove'
+      unique: 'Sitegeist\CriQuel\Processor\Unique'
+      children: 'Sitegeist\CriQuel\Processor\Children'
+      filter: 'Sitegeist\CriQuel\Processor\Filter'
+      ancestors: 'Sitegeist\CriQuel\Processor\Ancestors'
+      descendants: 'Sitegeist\CriQuel\Processor\Descendants'
+      withAncestors: 'Sitegeist\CriQuel\Processor\WithAncestors'
+      withDescendants: 'Sitegeist\CriQuel\Processor\WithDescendants'

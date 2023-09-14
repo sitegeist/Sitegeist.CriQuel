@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Sitegeist\CriQuel\Operations;
+namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindSubtreeFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
-use Sitegeist\CriQuel\OperationInterface;
+use Sitegeist\CriQuel\ProcessorInterface;
 
-final class WithDescendants implements OperationInterface
+final class WithDescendants implements ProcessorInterface
 {
     use FlattenSubtreeTrait;
 

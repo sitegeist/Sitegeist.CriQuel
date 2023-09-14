@@ -10,12 +10,13 @@ use Sitegeist\CriQuel\Query;
 use Sitegeist\CriQuel\Operations\Add;
 use Sitegeist\CriQuel\Operations\Remove;
 use Sitegeist\CriQuel\Operations\WithDescendants;
+use Sitegeist\CriQuel\Extractor\Property;
 
 $result = Query::create($node)
   ->apply(new Add($otherNode))
   ->apply(new Remove($stuff))
   ->apply(new WithDescendants('Neos.Neos:Document'))
-  ->get();
+  ->extract(new Property("title"));
 ```
 
 The equivalent fusion code looks like:

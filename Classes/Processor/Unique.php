@@ -1,14 +1,14 @@
 <?php
 
-namespace Sitegeist\CriQuel\Operations;
+namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\NodeAccess\FlowQueryOperations\CreateNodeHashTrait;
-use Sitegeist\CriQuel\OperationInterface;
+use Sitegeist\CriQuel\ProcessorInterface;
 use Sitegeist\CriQuel\TransientOperationInterface;
 
-class Unique implements OperationInterface
+class Unique implements ProcessorInterface
 {
     use CreateNodeHashTrait;
 

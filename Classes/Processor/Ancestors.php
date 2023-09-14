@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sitegeist\CriQuel\Operations;
+namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\NodeType\NodeTypeNames;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindAncestorNodesFilter;
@@ -13,10 +13,10 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
-use Sitegeist\CriQuel\OperationInterface;
+use Sitegeist\CriQuel\ProcessorInterface;
 use Sitegeist\Taxonomy\Service\TaxonomyService;
 
-class Ancestors implements OperationInterface
+class Ancestors implements ProcessorInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;

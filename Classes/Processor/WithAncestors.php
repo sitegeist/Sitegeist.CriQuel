@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Sitegeist\CriQuel\Operations;
+namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindAncestorNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
-use Sitegeist\CriQuel\OperationInterface;
+use Sitegeist\CriQuel\ProcessorInterface;
 
-class WithAncestors implements OperationInterface
+class WithAncestors implements ProcessorInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;

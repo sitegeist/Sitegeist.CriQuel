@@ -17,7 +17,7 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
 
     protected Nodes $nodes;
 
-    private function __construct(Nodes $nodes)
+    public function __construct(Nodes $nodes)
     {
         $this->nodes = $nodes;
     }
@@ -37,9 +37,14 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
         return new Query($nodes);
     }
 
-    public function apply(OperationInterface $operation): Query
+    public function apply(ProcessorInterface $operation): Query
     {
         return new Query($operation->apply($this->nodes));
+    }
+
+    public function extract(ExtractorInterface $extractor): mixed
+    {
+        return $extractor->apply($this->nodes);
     }
 
     public function get(): Nodes
@@ -47,15 +52,14 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
         return $this->nodes;
     }
 
-    public function first(): ?Node
-    {
-        return $this->nodes->first();
-    }
-
-    public function __call(string $methodName, array $arguments): Query
+    public function __call(string $methodName, array $arguments): mixed
     {
         $operation = $this->operationResolver->resolve($methodName, $arguments);
-        return $this->apply($operation);
+        if ($operation instanceof ProcessorInterface) {
+            return $this->apply($operation);
+        } elseif ($operation instanceof ExtractorInterface) {
+            return $this->extract($operation);
+        }
     }
 
     public function getIterator(): Traversable
@@ -65,6 +69,6 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
 
     public function allowsCallOfMethod($methodName)
     {
-        return !in_array($methodName, ['apply', 'getIterator', '__call', 'create]']);
+        return !in_array($methodName, ['apply', 'extract', 'getIterator', '__call', 'create]']);
     }
 }

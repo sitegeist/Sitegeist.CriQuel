@@ -6,5 +6,5 @@ namespace Sitegeist\CriQuel;
 
 interface OperationResolverInterface
 {
-    public function resolve(string $name, array $arguments): OperationInterface;
+    public function resolve(string $name, array $arguments): ProcessorInterface|ExtractorInterface;
 }

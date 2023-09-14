@@ -1,13 +1,13 @@
 <?php
 
-namespace Sitegeist\CriQuel\Operations;
+namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
-use Sitegeist\CriQuel\OperationInterface;
+use Sitegeist\CriQuel\ProcessorInterface;
 use Sitegeist\CriQuel\TransientOperationInterface;
 
-class Add implements OperationInterface
+class Add implements ProcessorInterface
 {
     private Nodes $nodes;
     public function __construct(Nodes|Node ...$items)
