@@ -7,16 +7,14 @@ in a type safe way from php.
 
 ```php
 use Sitegeist\CriQuel\Query;
-use Sitegeist\CriQuel\Operations\Add;
-use Sitegeist\CriQuel\Operations\Remove;
-use Sitegeist\CriQuel\Operations\WithDescendants;
-use Sitegeist\CriQuel\Extractor\Property;
+use Sitegeist\CriQuel\Processor;
+use Sitegeist\CriQuel\Extractor;
 
 $result = Query::create($node)
-  ->apply(new Add($otherNode))
-  ->apply(new Remove($stuff))
-  ->apply(new WithDescendants('Neos.Neos:Document'))
-  ->extract(new Property("title"));
+  ->process(new Processor\Add($otherNode))
+  ->process(new Processor\Remove($stuff))
+  ->process(new Processor\WithDescendants('Neos.Neos:Document'))
+  ->extract(new Extractor\Property("title"));
 ```
 
 The equivalent fusion code looks like:

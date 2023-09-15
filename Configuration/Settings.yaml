@@ -7,13 +7,13 @@ Sitegeist:
   CriQuel:
     operations:
       # Extractor operations
-      first: 'Sitegeist\CriQuel\Extractor\First'
-      last: 'Sitegeist\CriQuel\Extractor\First'
       count: 'Sitegeist\CriQuel\Extractor\Count'
       property: 'Sitegeist\CriQuel\Extractor\Property'
       properties: 'Sitegeist\CriQuel\Extractor\Properties'
 
       # Processor operation
+      first: 'Sitegeist\CriQuel\Processor\First'
+      last: 'Sitegeist\CriQuel\Processor\First'
       add: 'Sitegeist\CriQuel\Processor\Add'
       remove: 'Sitegeist\CriQuel\Processor\Remove'
       unique: 'Sitegeist\CriQuel\Processor\Unique'

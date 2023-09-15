@@ -15,11 +15,8 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
     #[FLow\Inject]
     protected OperationResolverInterface $operationResolver;
 
-    protected Nodes $nodes;
-
-    public function __construct(Nodes $nodes)
+    public function __construct(public readonly Nodes $nodes)
     {
-        $this->nodes = $nodes;
     }
 
     public static function create(Nodes|Node|Query ...$items): Query
@@ -37,11 +34,15 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
         return new Query($nodes);
     }
 
-    public function apply(ProcessorInterface $operation): Query
+    public function process(ProcessorInterface $operation): Query
     {
         return new Query($operation->apply($this->nodes));
     }
 
+    /**
+     * @todo find a way to specify return type based on passed extractor object
+     *       and sometimes arguments like `new Extractor\Property('title')`
+     */
     public function extract(ExtractorInterface $extractor): mixed
     {
         return $extractor->apply($this->nodes);
@@ -56,10 +57,9 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
     {
         $operation = $this->operationResolver->resolve($methodName, $arguments);
         if ($operation instanceof ProcessorInterface) {
-            return $this->apply($operation);
-        } elseif ($operation instanceof ExtractorInterface) {
-            return $this->extract($operation);
+            return $this->process($operation);
         }
+        return $this->extract($operation);
     }
 
     public function getIterator(): Traversable
@@ -69,6 +69,6 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
 
     public function allowsCallOfMethod($methodName)
     {
-        return !in_array($methodName, ['apply', 'extract', 'getIterator', '__call', 'create]']);
+        return !in_array($methodName, ['process', 'extract', 'getIterator', '__call', 'create]']);
     }
 }
