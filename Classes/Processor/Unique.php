@@ -19,7 +19,6 @@ class Unique implements ProcessorInterface
     public function apply(Nodes $nodes): Nodes
     {
         $nodesByHash = [];
-        /** @var Node $contextNode */
         foreach ($nodes as $node) {
             $hash = $this->createNodeHash($node);
             if (!array_key_exists($hash, $nodesByHash)) {

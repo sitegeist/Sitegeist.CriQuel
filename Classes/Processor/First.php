@@ -9,6 +9,9 @@ class First implements ProcessorInterface
 {
     public function apply(Nodes $nodes): Nodes
     {
-        return Nodes::fromArray([$nodes->first()]);
+        if ($node = $nodes->first()) {
+            return Nodes::fromArray([$node]);
+        }
+        return Nodes::createEmpty();
     }
 }

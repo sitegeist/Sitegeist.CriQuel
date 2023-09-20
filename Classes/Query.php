@@ -10,6 +10,9 @@ use Neos\Eel\ProtectedContextAwareInterface;
 use Neos\Flow\Annotations as Flow;
 use Traversable;
 
+/**
+ * @implements \IteratorAggregate<int, Node>
+ */
 class Query implements ProtectedContextAwareInterface, \IteratorAggregate
 {
     #[FLow\Inject]
@@ -53,6 +56,9 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
         return $this->nodes;
     }
 
+    /**
+     * @param mixed[] $arguments
+     */
     public function __call(string $methodName, array $arguments): mixed
     {
         $operation = $this->operationResolver->resolve($methodName, $arguments);

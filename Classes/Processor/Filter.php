@@ -35,7 +35,7 @@ class Filter implements ProcessorInterface
 
         if (is_string($propertyValueCriteria)) {
             $this->propertyValueCriteria = PropertyValueCriteriaParser::parse($propertyValueCriteria);
-        } elseif ($nodeTypeConstraints instanceof PropertyValueCriteriaInterface) {
+        } elseif ($propertyValueCriteria instanceof PropertyValueCriteriaInterface) {
             $this->propertyValueCriteria = $propertyValueCriteria;
         }
     }
@@ -45,10 +45,10 @@ class Filter implements ProcessorInterface
         $filteredNodes = [];
         if ($first = $nodes->first()) {
             $nodeTypeManager = $this->crRegistry->get(ContentRepositoryId::fromString('default'))->getNodeTypeManager();
-            $constraints = NodeTypeConstraintsWithSubNodeTypes::create($this->nodeTypeConstraints, $nodeTypeManager);
+            $nodeTypeConstraintsWithSubNodeTypes = $this->nodeTypeConstraints ? NodeTypeConstraintsWithSubNodeTypes::create($this->nodeTypeConstraints, $nodeTypeManager) : null;
             foreach ($nodes as $node) {
                 if (
-                    ($this->nodeTypeConstraints === null || NodeCriteriaMatcher::matchesNodeTypeConstraint($node, $constraints))
+                    ($nodeTypeConstraintsWithSubNodeTypes === null || NodeCriteriaMatcher::matchesNodeTypeConstraint($node, $nodeTypeConstraintsWithSubNodeTypes))
                     && ($this->propertyValueCriteria === null || NodeCriteriaMatcher::matchesPropertyConstraint($node, $this->propertyValueCriteria))
                 ) {
                     $filteredNodes[] = $node;

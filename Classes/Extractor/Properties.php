@@ -11,6 +11,9 @@ class Properties implements ExtractorInterface
     {
     }
 
+    /**
+     * @return mixed[]
+     */
     public function apply(Nodes $nodes): array
     {
         $result = [];

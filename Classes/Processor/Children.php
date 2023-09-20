@@ -31,7 +31,7 @@ class Children implements ProcessorInterface
 
         if (is_string($propertyValueCriteria)) {
             $this->propertyValueCriteria = PropertyValueCriteriaParser::parse($propertyValueCriteria);
-        } elseif ($nodeTypeConstraints instanceof PropertyValueCriteriaInterface) {
+        } elseif ($propertyValueCriteria instanceof PropertyValueCriteriaInterface) {
             $this->propertyValueCriteria = $propertyValueCriteria;
         }
     }
