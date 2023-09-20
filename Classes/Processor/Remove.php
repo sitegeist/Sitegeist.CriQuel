@@ -8,23 +8,30 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\NodeAccess\FlowQueryOperations\CreateNodeHashTrait;
 use Sitegeist\CriQuel\ProcessorInterface;
+use Sitegeist\CriQuel\Query;
 
 class Remove implements ProcessorInterface
 {
     use CreateNodeHashTrait;
 
+    /**
+     * @var array<string, string>
+     */
     private array $hashesToRemove = [];
-    public function __construct(Nodes|Node ...$items)
+
+    public function __construct(Nodes|Node|Query ...$items)
     {
-        $nodes = Nodes::createEmpty();
+        $nodesToRemove = Nodes::createEmpty();
         foreach ($items as $item) {
             if ($item instanceof Node) {
-                $nodes = $nodes->merge(Nodes::fromArray([$item]));
+                $nodesToRemove = $nodesToRemove->merge(Nodes::fromArray([$item]));
             } elseif ($item instanceof Nodes) {
-                $nodes = $nodes->merge($item);
+                $nodesToRemove = $nodesToRemove->merge($item);
+            } elseif ($item instanceof Query) {
+                $nodesToRemove = $nodesToRemove->merge($item->nodes);
             }
         }
-        foreach ($nodes as $node) {
+        foreach ($nodesToRemove as $node) {
             $hash = $this->createNodeHash($node);
             $hashesToRemove[$hash] = $hash;
         }
@@ -32,13 +39,13 @@ class Remove implements ProcessorInterface
 
     public function apply(Nodes $nodes): Nodes
     {
-        $result = [];
+        $filteredNodes = [];
         foreach ($nodes as $node) {
             $hash = $this->createNodeHash($node);
             if (!in_array($hash, $this->hashesToRemove)) {
-                $result[] = $node;
+                $filteredNodes[] = $node;
             }
         }
-        return Nodes::fromArray($result);
+        return Nodes::fromArray($filteredNodes);
     }
 }

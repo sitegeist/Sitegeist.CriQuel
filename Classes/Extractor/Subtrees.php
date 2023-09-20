@@ -1,21 +1,17 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Sitegeist\CriQuel\Processor;
+namespace Sitegeist\CriQuel\Extractor;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindSubtreeFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
-use Sitegeist\CriQuel\ProcessorInterface;
-use Sitegeist\CriQuel\Trait\FlattenSubtreeTrait;
+use Sitegeist\CriQuel\ExtractorInterface;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Subtrees as CrSubtrees;
 
-final class WithDescendants implements ProcessorInterface
+class Subtrees implements ExtractorInterface
 {
-    use FlattenSubtreeTrait;
-
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;
 
@@ -30,19 +26,18 @@ final class WithDescendants implements ProcessorInterface
         }
     }
 
-    public function apply(Nodes $nodes): Nodes
+    public function apply(Nodes $nodes): CrSubtrees
     {
         $filter = FindSubtreeFilter::create(
-            $this->nodeTypeConstraints,
+            $this->nodeTypeConstraints
         );
-        $result = Nodes::createEmpty();
+        $subtrees = [];
         foreach ($nodes as $node) {
             $subgraph = $this->crRegistry->subgraphForNode($node);
-            $subtree = $subgraph->findSubtree($node->nodeAggregateId, $filter);
-            if ($subtree) {
-                $result = $result->merge($this->flattenSubtree($subtree));
+            if ($subtree = $subgraph->findSubtree($node->nodeAggregateId, $filter)) {
+                $subtrees[] = $subtree;
             }
         }
-        return $result;
+        return CrSubtrees::fromArray($subtrees);
     }
 }

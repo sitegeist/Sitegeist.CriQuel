@@ -6,9 +6,11 @@ namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindSubtreeFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
+use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\ProcessorInterface;
+use Sitegeist\CriQuel\Trait\FlattenSubtreeTrait;
 
 final class Descendants implements ProcessorInterface
 {
@@ -17,21 +19,22 @@ final class Descendants implements ProcessorInterface
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;
 
-    protected ?string $nodeTypeConstraints;
-    protected ?int $maximumLevels;
+    protected ?NodeTypeConstraints $nodeTypeConstraints = null;
 
-    public function __construct(string $nodeTypeConstraints = null, int $maximumLevels = null)
+    public function __construct(NodeTypeConstraints|string $nodeTypeConstraints = null)
     {
-        $this->nodeTypeConstraints = $nodeTypeConstraints;
-        $this->maximumLevels = $maximumLevels;
+        if (is_string($nodeTypeConstraints)) {
+            $this->nodeTypeConstraints = NodeTypeConstraints::fromFilterString($nodeTypeConstraints);
+        } elseif ($nodeTypeConstraints instanceof NodeTypeConstraints)  {
+            $this->nodeTypeConstraints = $nodeTypeConstraints;
+        }
     }
 
     public function apply(Nodes $nodes): Nodes
     {
         $result = Nodes::createEmpty();
         $filter = FindSubtreeFilter::create(
-            $this->nodeTypeConstraints,
-            $this->maximumLevels
+            $this->nodeTypeConstraints
         );
         foreach ($nodes as $node) {
             $subgraph = $this->crRegistry->subgraphForNode($node);

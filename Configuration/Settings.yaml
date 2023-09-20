@@ -10,14 +10,16 @@ Sitegeist:
       count: 'Sitegeist\CriQuel\Extractor\Count'
       property: 'Sitegeist\CriQuel\Extractor\Property'
       properties: 'Sitegeist\CriQuel\Extractor\Properties'
+      subtrees: 'Sitegeist\CriQuel\Extractor\Subtrees'
 
-      # Processor operation
+      # Processor operations
       first: 'Sitegeist\CriQuel\Processor\First'
       last: 'Sitegeist\CriQuel\Processor\First'
       add: 'Sitegeist\CriQuel\Processor\Add'
       remove: 'Sitegeist\CriQuel\Processor\Remove'
       unique: 'Sitegeist\CriQuel\Processor\Unique'
       children: 'Sitegeist\CriQuel\Processor\Children'
+      tethered: 'Sitegeist\CriQuel\Processor\Tethered'
       filter: 'Sitegeist\CriQuel\Processor\Filter'
       ancestors: 'Sitegeist\CriQuel\Processor\Ancestors'
       descendants: 'Sitegeist\CriQuel\Processor\Descendants'

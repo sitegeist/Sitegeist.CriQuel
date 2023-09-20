@@ -23,3 +23,35 @@ The equivalent fusion code looks like:
 value = ${crql(node).add(otherNode).remove(stuff).withDescendants('Neos.Neos:Document').get()}
 ```
 
+# CriQuel Operations ... so far
+
+## Processors
+
+are defined in the php namespace `Sitegeist\CriQuel\Processor`
+
+- `new Add(Nodes|Node|Query ...$items)` 
+- `new Remove(Nodes|Node|Query ...$items)` 
+
+- `new First()`
+- `new Last()`
+- `new Unique()`
+- `new Last()`
+
+- `new Thered(NodeName|string $name)`
+
+- `new Ancestors(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new WithAncestors(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new Descendants(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new WithDescendants(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new Children(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new Filter(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+
+## Extractors
+
+are defined in the php namespace `Sitegeist\CriQuel\Extractor`
+
+- `new Subtrees(NodeTypeConstraints|string $nodeTypeConstraints = null):Subtrees` 
+
+- `new Count(): int`
+- `new Properties(string $name): mixed[]`
+- `new Property(string $name): mixed`

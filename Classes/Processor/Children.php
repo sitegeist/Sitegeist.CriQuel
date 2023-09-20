@@ -6,6 +6,7 @@ namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
+use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\ProcessorInterface;
@@ -15,12 +16,17 @@ class Children implements ProcessorInterface
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;
 
-    protected ?string $nodeTypeConstraints;
+    protected ?NodeTypeConstraints $nodeTypeConstraints = null;
 
-    public function __construct(string $nodeTypeConstraints = null)
+    public function __construct(NodeTypeConstraints|string $nodeTypeConstraints = null)
     {
-        $this->nodeTypeConstraints = $nodeTypeConstraints;
+        if (is_string($nodeTypeConstraints)) {
+            $this->nodeTypeConstraints = NodeTypeConstraints::fromFilterString($nodeTypeConstraints);
+        } elseif ($nodeTypeConstraints instanceof NodeTypeConstraints)  {
+            $this->nodeTypeConstraints = $nodeTypeConstraints;
+        }
     }
+
     public function apply(Nodes $nodes): Nodes
     {
         $filter = FindChildNodesFilter::create(

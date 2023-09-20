@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sitegeist\CriQuel\Processor;
+namespace Sitegeist\CriQuel\Trait;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Subtree;

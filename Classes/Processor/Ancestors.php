@@ -21,11 +21,15 @@ class Ancestors implements ProcessorInterface
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;
 
-    protected ?string $nodeTypeConstraints;
+    protected ?NodeTypeConstraints $nodeTypeConstraints = null;
 
-    public function __construct(string $nodeTypeConstraints = null)
+    public function __construct(NodeTypeConstraints|string $nodeTypeConstraints = null)
     {
-        $this->nodeTypeConstraints = $nodeTypeConstraints;
+        if (is_string($nodeTypeConstraints)) {
+            $this->nodeTypeConstraints = NodeTypeConstraints::fromFilterString($nodeTypeConstraints);
+        } elseif ($nodeTypeConstraints instanceof NodeTypeConstraints)  {
+            $this->nodeTypeConstraints = $nodeTypeConstraints;
+        }
     }
 
     public function apply(Nodes $nodes): Nodes
