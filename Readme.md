@@ -14,13 +14,14 @@ $result = Query::create($node)
   ->process(new Processor\Add($otherNode))
   ->process(new Processor\Remove($stuff))
   ->process(new Processor\WithDescendants('Neos.Neos:Document'))
+  ->process(new Processor\Filter('Neos.Neos:Document', 'title *= "foo"'))
   ->extract(new Extractor\Property("title"));
 ```
 
 The equivalent fusion code looks like:
 
 ```neosfusion
-value = ${crql(node).add(otherNode).remove(stuff).withDescendants('Neos.Neos:Document').get()}
+value = ${crql(node).add(otherNode).remove(stuff).withDescendants('Neos.Neos:Document').filter('Neos.Neos:Document', 'title *= "foo"').get()}
 ```
 
 # CriQuel Operations ... so far
@@ -43,8 +44,8 @@ are defined in the php namespace `Sitegeist\CriQuel\Processor`
 - `new WithAncestors(NodeTypeConstraints|string $nodeTypeConstraints = null)`
 - `new Descendants(NodeTypeConstraints|string $nodeTypeConstraints = null)`
 - `new WithDescendants(NodeTypeConstraints|string $nodeTypeConstraints = null)`
-- `new Children(NodeTypeConstraints|string $nodeTypeConstraints = null)`
-- `new Filter(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new Children(NodeTypeConstraints|string $nodeTypeConstraints = null, PropertyValueCriteriaInterface|string $propertyValueCriteria)`
+- `new Filter(NodeTypeConstraints|string $nodeTypeConstraints = null, PropertyValueCriteriaInterface|string $propertyValueCriteria)`
 
 ## Extractors
 

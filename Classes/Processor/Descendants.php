@@ -25,7 +25,7 @@ final class Descendants implements ProcessorInterface
     {
         if (is_string($nodeTypeConstraints)) {
             $this->nodeTypeConstraints = NodeTypeConstraints::fromFilterString($nodeTypeConstraints);
-        } elseif ($nodeTypeConstraints instanceof NodeTypeConstraints)  {
+        } elseif ($nodeTypeConstraints instanceof NodeTypeConstraints) {
             $this->nodeTypeConstraints = $nodeTypeConstraints;
         }
     }
