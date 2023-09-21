@@ -14,14 +14,14 @@ $result = Query::create($node)
   ->process(new Processor\Add($otherNode))
   ->process(new Processor\Remove($stuff))
   ->process(new Processor\WithDescendants('Neos.Neos:Document'))
-  ->process(new Processor\Filter('Neos.Neos:Document', 'title *= "foo"'))
+  ->process(new Processor\Filter('Neos.Neos:Document', 'title *= "foo" OR title *= "bar"'))
   ->extract(new Extractor\GetProperty("title"));
 ```
 
 The equivalent fusion code looks like:
 
 ```neosfusion
-value = ${crql(node).add(otherNode).remove(stuff).withDescendants('Neos.Neos:Document').filter('Neos.Neos:Document', 'title *= "foo"').get()}
+value = ${crql(node).add(otherNode).remove(stuff).withDescendants('Neos.Neos:Document').filter('Neos.Neos:Document', 'title *= "foo" OR title *= "bar"').get()}
 ```
 
 # CriQuel Operations ... so far
