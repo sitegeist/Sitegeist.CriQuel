@@ -48,7 +48,7 @@ class Filter implements ProcessorInterface
             $nodeTypeConstraintsWithSubNodeTypes = $this->nodeTypeConstraints ? NodeTypeConstraintsWithSubNodeTypes::create($this->nodeTypeConstraints, $nodeTypeManager) : null;
             foreach ($nodes as $node) {
                 if (
-                    ($nodeTypeConstraintsWithSubNodeTypes === null || NodeCriteriaMatcher::matchesNodeTypeConstraint($node, $nodeTypeConstraintsWithSubNodeTypes))
+                    ($nodeTypeConstraintsWithSubNodeTypes === null || $nodeTypeConstraintsWithSubNodeTypes->matches($node->nodeTypeName))
                     && ($this->propertyValueCriteria === null || NodeCriteriaMatcher::matchesPropertyConstraint($node, $this->propertyValueCriteria))
                 ) {
                     $filteredNodes[] = $node;

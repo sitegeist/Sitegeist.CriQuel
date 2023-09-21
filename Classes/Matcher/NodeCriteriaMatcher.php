@@ -22,25 +22,6 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraintsWithS
 
 final class NodeCriteriaMatcher
 {
-    public static function matchesNodeTypeConstraint(Node $node, NodeTypeConstraints|NodeTypeConstraintsWithSubNodeTypes $nodeTypeConstraints): bool
-    {
-        $nodeTypeName = $node->nodeTypeName;
-        $allowed = false;
-        $forbidden = false;
-        foreach ($nodeTypeConstraints->explicitlyAllowedNodeTypeNames as $allowedNodeTypeName) {
-            if ($nodeTypeName->equals($allowedNodeTypeName)) {
-                $allowed = true;
-                break;
-            }
-        }
-        foreach ($nodeTypeConstraints->explicitlyDisallowedNodeTypeNames as $disallowedNodeTypeName) {
-            if ($nodeTypeName->equals($disallowedNodeTypeName)) {
-                $forbidden = true;
-                break;
-            }
-        }
-        return $allowed && !$forbidden;
-    }
 
     public static function matchesPropertyConstraint(Node $node, PropertyValueCriteriaInterface $propertyValueCriteria): bool
     {
