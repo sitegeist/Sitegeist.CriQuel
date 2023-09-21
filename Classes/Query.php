@@ -51,9 +51,22 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
         return $extractor->apply($this->nodes);
     }
 
+    /**
+     * This duplicates logic from the get extractor for beeing type safe accessible in php
+     * @see \Sitegeist\CriQuel\Extractor\Get
+     */
     public function get(): Nodes
     {
         return $this->nodes;
+    }
+
+    /**
+     * This duplicates logic from the getFirst extractor for beeing type safe accessible in php
+     * @see \Sitegeist\CriQuel\Extractor\GetFirst
+     */
+    public function getFirst(): ?Node
+    {
+        return $this->nodes->first();
     }
 
     /**

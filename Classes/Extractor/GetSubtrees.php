@@ -10,7 +10,7 @@ use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\ExtractorInterface;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Subtrees as CrSubtrees;
 
-class Subtrees implements ExtractorInterface
+class GetSubtrees implements ExtractorInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;

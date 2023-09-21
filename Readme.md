@@ -15,7 +15,7 @@ $result = Query::create($node)
   ->process(new Processor\Remove($stuff))
   ->process(new Processor\WithDescendants('Neos.Neos:Document'))
   ->process(new Processor\Filter('Neos.Neos:Document', 'title *= "foo"'))
-  ->extract(new Extractor\Property("title"));
+  ->extract(new Extractor\GetProperty("title"));
 ```
 
 The equivalent fusion code looks like:
@@ -51,8 +51,10 @@ are defined in the php namespace `Sitegeist\CriQuel\Processor`
 
 are defined in the php namespace `Sitegeist\CriQuel\Extractor`
 
-- `new Subtrees(NodeTypeConstraints|string $nodeTypeConstraints = null):Subtrees` 
+- `new Get(): Nodes`
+- `new GetCount(): int`
+- `new GetFirst(): ?Node`
+- `new GetProperties(string $name): mixed[]`
+- `new GetProperty(string $name): mixed`
 
-- `new Count(): int`
-- `new Properties(string $name): mixed[]`
-- `new Property(string $name): mixed`
+- `new GetSubtrees(NodeTypeConstraints|string $nodeTypeConstraints = null):Subtrees` 

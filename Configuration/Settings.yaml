@@ -7,10 +7,12 @@ Sitegeist:
   CriQuel:
     operations:
       # Extractor operations
-      count: 'Sitegeist\CriQuel\Extractor\Count'
-      property: 'Sitegeist\CriQuel\Extractor\Property'
-      properties: 'Sitegeist\CriQuel\Extractor\Properties'
-      subtrees: 'Sitegeist\CriQuel\Extractor\Subtrees'
+      get: 'Sitegeist\CriQuel\Extractor\Get'
+      getFirst: 'Sitegeist\CriQuel\Extractor\GetFirst'
+      getCount: 'Sitegeist\CriQuel\Extractor\GetCount'
+      getProperty: 'Sitegeist\CriQuel\Extractor\GetProperty'
+      getProperties: 'Sitegeist\CriQuel\Extractor\GetProperties'
+      getSubtrees: 'Sitegeist\CriQuel\Extractor\GetSubtrees'
 
       # Processor operations
       first: 'Sitegeist\CriQuel\Processor\First'

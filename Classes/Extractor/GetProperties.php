@@ -5,7 +5,7 @@ namespace Sitegeist\CriQuel\Extractor;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Sitegeist\CriQuel\ExtractorInterface;
 
-class Properties implements ExtractorInterface
+class GetProperties implements ExtractorInterface
 {
     public function __construct(protected string $name)
     {
