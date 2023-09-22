@@ -11,10 +11,10 @@ use Sitegeist\CriQuel\Processor;
 use Sitegeist\CriQuel\Extractor;
 
 $result = Query::create($node)
-  ->process(new Processor\Add($otherNode))
-  ->process(new Processor\Remove($stuff))
-  ->process(new Processor\WithDescendants('Neos.Neos:Document'))
-  ->process(new Processor\Filter('Neos.Neos:Document', 'title *= "foo" OR title *= "bar"'))
+  ->chain(new Processor\Add($otherNode))
+  ->chain(new Processor\Remove($stuff))
+  ->chain(new Processor\WithDescendants('Neos.Neos:Document'))
+  ->chain(new Processor\Filter('Neos.Neos:Document', 'title *= "foo" OR title *= "bar"'))
   ->extract(new Extractor\GetProperty("title"));
 ```
 

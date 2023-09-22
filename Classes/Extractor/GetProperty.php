@@ -11,7 +11,7 @@ class GetProperty implements ExtractorInterface
     {
     }
 
-    public function apply(Nodes $nodes): mixed
+    public function extract(Nodes $nodes): mixed
     {
         return $nodes->first()?->getProperty($this->name);
     }

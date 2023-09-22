@@ -37,9 +37,9 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
         return new Query($nodes);
     }
 
-    public function process(ProcessorInterface $operation): Query
+    public function chain(ProcessorInterface $operation): Query
     {
-        return new Query($operation->apply($this->nodes));
+        return new Query($operation->process($this->nodes));
     }
 
     /**
@@ -48,7 +48,7 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
      */
     public function extract(ExtractorInterface $extractor): mixed
     {
-        return $extractor->apply($this->nodes);
+        return $extractor->extract($this->nodes);
     }
 
     /**
@@ -76,7 +76,7 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
     {
         $operation = $this->operationResolver->resolve($methodName, $arguments);
         if ($operation instanceof ProcessorInterface) {
-            return $this->process($operation);
+            return $this->chain($operation);
         }
         return $this->extract($operation);
     }

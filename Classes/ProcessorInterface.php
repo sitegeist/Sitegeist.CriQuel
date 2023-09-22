@@ -8,5 +8,5 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 
 interface ProcessorInterface
 {
-    public function apply(Nodes $nodes): Nodes;
+    public function process(Nodes $nodes): Nodes;
 }

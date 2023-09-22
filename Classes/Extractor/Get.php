@@ -7,7 +7,7 @@ use Sitegeist\CriQuel\ExtractorInterface;
 
 class Get implements ExtractorInterface
 {
-    public function apply(Nodes $nodes): Nodes
+    public function extract(Nodes $nodes): Nodes
     {
         return $nodes;
     }

@@ -36,7 +36,7 @@ class Children implements ProcessorInterface
         }
     }
 
-    public function apply(Nodes $nodes): Nodes
+    public function process(Nodes $nodes): Nodes
     {
         $filter = FindChildNodesFilter::create(
             nodeTypeConstraints: $this->nodeTypeConstraints,

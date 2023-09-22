@@ -37,7 +37,7 @@ class Remove implements ProcessorInterface
         }
     }
 
-    public function apply(Nodes $nodes): Nodes
+    public function process(Nodes $nodes): Nodes
     {
         $filteredNodes = [];
         foreach ($nodes as $node) {

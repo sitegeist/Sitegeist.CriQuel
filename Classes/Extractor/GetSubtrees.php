@@ -27,7 +27,7 @@ class GetSubtrees implements ExtractorInterface
         }
     }
 
-    public function apply(Nodes $nodes): CrSubtrees
+    public function extract(Nodes $nodes): CrSubtrees
     {
         $filter = FindSubtreeFilter::create(
             $this->nodeTypeConstraints

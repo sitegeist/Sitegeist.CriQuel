@@ -14,7 +14,7 @@ class GetProperties implements ExtractorInterface
     /**
      * @return mixed[]
      */
-    public function apply(Nodes $nodes): array
+    public function extract(Nodes $nodes): array
     {
         $result = [];
         foreach ($nodes as $key => $node) {

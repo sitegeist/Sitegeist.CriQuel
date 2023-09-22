@@ -16,7 +16,7 @@ class Unique implements ProcessorInterface
     {
     }
 
-    public function apply(Nodes $nodes): Nodes
+    public function process(Nodes $nodes): Nodes
     {
         $nodesByHash = [];
         foreach ($nodes as $node) {

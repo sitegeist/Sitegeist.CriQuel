@@ -8,5 +8,5 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 
 interface ExtractorInterface
 {
-    public function apply(Nodes $nodes): mixed;
+    public function extract(Nodes $nodes): mixed;
 }

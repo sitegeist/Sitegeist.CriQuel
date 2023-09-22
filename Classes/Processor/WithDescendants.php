@@ -31,7 +31,7 @@ final class WithDescendants implements ProcessorInterface
         }
     }
 
-    public function apply(Nodes $nodes): Nodes
+    public function process(Nodes $nodes): Nodes
     {
         $filter = FindSubtreeFilter::create(
             $this->nodeTypeConstraints,

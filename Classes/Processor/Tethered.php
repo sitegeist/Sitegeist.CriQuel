@@ -28,7 +28,7 @@ class Tethered implements ProcessorInterface
         }
     }
 
-    public function apply(Nodes $nodes): Nodes
+    public function process(Nodes $nodes): Nodes
     {
         $nodeArray = [];
         foreach ($nodes as $node) {

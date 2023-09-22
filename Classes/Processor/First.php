@@ -8,7 +8,7 @@ use Sitegeist\CriQuel\ProcessorInterface;
 
 class First implements ProcessorInterface
 {
-    public function apply(Nodes $nodes): Nodes
+    public function process(Nodes $nodes): Nodes
     {
         $node = $nodes->first();
         if ($node instanceof Node) {

@@ -31,7 +31,7 @@ final class Descendants implements ProcessorInterface
         }
     }
 
-    public function apply(Nodes $nodes): Nodes
+    public function process(Nodes $nodes): Nodes
     {
         $result = Nodes::createEmpty();
         $filter = FindSubtreeFilter::create(

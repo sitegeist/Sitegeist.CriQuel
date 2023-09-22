@@ -27,7 +27,7 @@ class WithAncestors implements ProcessorInterface
         }
     }
 
-    public function apply(Nodes $nodes): Nodes
+    public function process(Nodes $nodes): Nodes
     {
         $findAncestorFilter = FindAncestorNodesFilter::create(
             $this->nodeTypeConstraints

@@ -26,7 +26,7 @@ class Add implements ProcessorInterface
         $this->nodes = $nodes;
     }
 
-    public function apply(Nodes $nodes): Nodes
+    public function process(Nodes $nodes): Nodes
     {
         return $nodes->merge($this->nodes);
     }

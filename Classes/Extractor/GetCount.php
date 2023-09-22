@@ -7,7 +7,7 @@ use Sitegeist\CriQuel\ExtractorInterface;
 
 class GetCount implements ExtractorInterface
 {
-    public function apply(Nodes $nodes): int
+    public function extract(Nodes $nodes): int
     {
         return $nodes->count();
     }

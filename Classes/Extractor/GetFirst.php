@@ -8,7 +8,7 @@ use Sitegeist\CriQuel\ExtractorInterface;
 
 class GetFirst implements ExtractorInterface
 {
-    public function apply(Nodes $nodes): ?Node
+    public function extract(Nodes $nodes): ?Node
     {
         return $nodes->first();
     }

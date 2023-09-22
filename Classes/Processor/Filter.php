@@ -40,7 +40,7 @@ class Filter implements ProcessorInterface
         }
     }
 
-    public function apply(Nodes $nodes): Nodes
+    public function process(Nodes $nodes): Nodes
     {
         $filteredNodes = [];
         /** @todo adjust after node type manager is created elsewhere */
