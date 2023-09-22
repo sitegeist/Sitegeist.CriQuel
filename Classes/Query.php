@@ -88,6 +88,6 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
 
     public function allowsCallOfMethod($methodName)
     {
-        return !in_array($methodName, ['process', 'extract', 'getIterator', '__call', 'create]']);
+        return !in_array($methodName, ['process', 'extract', 'getIterator', '__call', 'create]'], true);
     }
 }

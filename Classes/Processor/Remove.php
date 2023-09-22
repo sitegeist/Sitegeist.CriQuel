@@ -33,7 +33,7 @@ class Remove implements ProcessorInterface
         }
         foreach ($nodesToRemove as $node) {
             $hash = $this->createNodeHash($node);
-            $hashesToRemove[$hash] = $hash;
+            $this->hashesToRemove[$hash] = $hash;
         }
     }
 
@@ -42,7 +42,7 @@ class Remove implements ProcessorInterface
         $filteredNodes = [];
         foreach ($nodes as $node) {
             $hash = $this->createNodeHash($node);
-            if (!in_array($hash, $this->hashesToRemove)) {
+            if (!in_array($hash, $this->hashesToRemove, true)) {
                 $filteredNodes[] = $node;
             }
         }

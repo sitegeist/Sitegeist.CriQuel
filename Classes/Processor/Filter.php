@@ -43,16 +43,15 @@ class Filter implements ProcessorInterface
     public function apply(Nodes $nodes): Nodes
     {
         $filteredNodes = [];
-        if ($first = $nodes->first()) {
-            $nodeTypeManager = $this->crRegistry->get(ContentRepositoryId::fromString('default'))->getNodeTypeManager();
-            $nodeTypeConstraintsWithSubNodeTypes = $this->nodeTypeConstraints ? NodeTypeConstraintsWithSubNodeTypes::create($this->nodeTypeConstraints, $nodeTypeManager) : null;
-            foreach ($nodes as $node) {
-                if (
-                    ($nodeTypeConstraintsWithSubNodeTypes === null || $nodeTypeConstraintsWithSubNodeTypes->matches($node->nodeTypeName))
-                    && ($this->propertyValueCriteria === null || NodeCriteriaMatcher::matchesPropertyConstraint($node, $this->propertyValueCriteria))
-                ) {
-                    $filteredNodes[] = $node;
-                }
+        /** @todo adjust after node type manager is created elsewhere */
+        $nodeTypeManager = $this->crRegistry->get(ContentRepositoryId::fromString('default'))->getNodeTypeManager();
+        $nodeTypeConstraintsWithSubNodeTypes = ($this->nodeTypeConstraints instanceof NodeTypeConstraints) ? NodeTypeConstraintsWithSubNodeTypes::create($this->nodeTypeConstraints, $nodeTypeManager) : null;
+        foreach ($nodes as $node) {
+            if (
+                ($nodeTypeConstraintsWithSubNodeTypes === null || $nodeTypeConstraintsWithSubNodeTypes->matches($node->nodeTypeName))
+                && ($this->propertyValueCriteria === null || NodeCriteriaMatcher::matchesPropertyConstraint($node, $this->propertyValueCriteria))
+            ) {
+                $filteredNodes[] = $node;
             }
         }
         return Nodes::fromArray($filteredNodes);

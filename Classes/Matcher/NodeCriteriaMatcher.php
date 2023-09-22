@@ -22,7 +22,6 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraintsWithS
 
 final class NodeCriteriaMatcher
 {
-
     public static function matchesPropertyConstraint(Node $node, PropertyValueCriteriaInterface $propertyValueCriteria): bool
     {
         switch (true) {

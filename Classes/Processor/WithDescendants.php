@@ -7,6 +7,7 @@ namespace Sitegeist\CriQuel\Processor;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindSubtreeFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Subtree;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\ProcessorInterface;
@@ -39,7 +40,7 @@ final class WithDescendants implements ProcessorInterface
         foreach ($nodes as $node) {
             $subgraph = $this->crRegistry->subgraphForNode($node);
             $subtree = $subgraph->findSubtree($node->nodeAggregateId, $filter);
-            if ($subtree) {
+            if ($subtree instanceof Subtree) {
                 $result = $result->merge($this->flattenSubtree($subtree));
             }
         }

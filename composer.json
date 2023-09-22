@@ -8,6 +8,8 @@
     "require-dev": {
         "neos/neos-development-collection": "9.0.x-dev",
         "phpstan/phpstan": "~1.10.16",
+        "phpstan/phpstan-strict-rules": "^1.5",
+        "phpstan/extension-installer": "^1.3",
         "squizlabs/php_codesniffer": "~3.7.2",
         "phpunit/phpunit": "~10.3.0"
     },
@@ -30,7 +32,8 @@
     },
     "config": {
         "allow-plugins": {
-            "neos/composer-plugin": true
+            "neos/composer-plugin": true,
+            "phpstan/extension-installer": true
         }
     }
 }

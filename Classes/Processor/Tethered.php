@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindChildNodesFilter;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\SharedModel\Node\NodeName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
@@ -32,7 +33,8 @@ class Tethered implements ProcessorInterface
         $nodeArray = [];
         foreach ($nodes as $node) {
             $subgraph = $this->crRegistry->subgraphForNode($node);
-            if ($tetheredNode = $subgraph->findChildNodeConnectedThroughEdgeName($node->nodeAggregateId, $this->name)) {
+            $tetheredNode = $subgraph->findChildNodeConnectedThroughEdgeName($node->nodeAggregateId, $this->name);
+            if ($tetheredNode instanceof Node) {
                 $nodeArray[] = $tetheredNode;
             }
         }
