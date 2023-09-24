@@ -6,17 +6,9 @@ Neos:
 Sitegeist:
   CriQuel:
     operations:
-      # Extractor operations
-      get: 'Sitegeist\CriQuel\Extractor\Get'
-      getFirst: 'Sitegeist\CriQuel\Extractor\GetFirst'
-      getCount: 'Sitegeist\CriQuel\Extractor\GetCount'
-      getProperty: 'Sitegeist\CriQuel\Extractor\GetProperty'
-      getProperties: 'Sitegeist\CriQuel\Extractor\GetProperties'
-      getSubtrees: 'Sitegeist\CriQuel\Extractor\GetSubtrees'
-
-      # Processor operations
+      # chainable Processor operations
       first: 'Sitegeist\CriQuel\Processor\First'
-      last: 'Sitegeist\CriQuel\Processor\First'
+      last: 'Sitegeist\CriQuel\Processor\Last'
       add: 'Sitegeist\CriQuel\Processor\Add'
       remove: 'Sitegeist\CriQuel\Processor\Remove'
       unique: 'Sitegeist\CriQuel\Processor\Unique'
@@ -27,3 +19,14 @@ Sitegeist:
       descendants: 'Sitegeist\CriQuel\Processor\Descendants'
       withAncestors: 'Sitegeist\CriQuel\Processor\WithAncestors'
       withDescendants: 'Sitegeist\CriQuel\Processor\WithDescendants'
+      referencingNodes:  'Sitegeist\CriQuel\Processor\ReferencingNodes'
+      referencedByNodes:  'Sitegeist\CriQuel\Processor\ReferencedByNodes'
+
+      # final Extractor operations
+      getNodes: 'Sitegeist\CriQuel\Extractor\GetNodes'
+      getNode: 'Sitegeist\CriQuel\Extractor\GetNode'
+      getReferences: 'Sitegeist\CriQuel\Extractor\GetReferences'
+      getReference: 'Sitegeist\CriQuel\Extractor\GetReference'
+      getProperties: 'Sitegeist\CriQuel\Extractor\GetProperties'
+      getProperty: 'Sitegeist\CriQuel\Extractor\GetProperty'
+      getCount: 'Sitegeist\CriQuel\Extractor\GetCount'
