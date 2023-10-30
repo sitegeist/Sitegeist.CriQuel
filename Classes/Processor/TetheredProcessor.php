@@ -12,7 +12,7 @@ use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\ProcessorInterface;
 
-class Tethered implements ProcessorInterface
+class TetheredProcessor implements ProcessorInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;

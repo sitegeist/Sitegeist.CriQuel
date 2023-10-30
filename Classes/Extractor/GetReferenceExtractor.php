@@ -10,13 +10,12 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Reference;
-use Neos\ContentRepository\Core\Projection\ContentGraph\References;
 use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\ExtractorInterface;
 
-class GetReferences implements ExtractorInterface
+class GetReferenceExtractor implements ExtractorInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $contentRepositoryRegistry;
@@ -32,22 +31,19 @@ class GetReferences implements ExtractorInterface
         }
     }
 
-    public function extract(Nodes $nodes): References
+    public function extract(Nodes $nodes): ?Reference
     {
         $findReferencesFilter = FindReferencesFilter::create(
-            referenceName: $this->referenceName
+            referenceName: $this->referenceName,
+            pagination: Pagination::fromLimitAndOffset(1, 0)
         );
-        /**
-         * @var Reference[] $result
-         */
-        $result = [];
         foreach ($nodes as $node) {
             $subgraph = $this->contentRepositoryRegistry->subgraphForNode($node);
             $references = $subgraph->findReferences($node->nodeAggregateId, $findReferencesFilter);
             foreach ($references as $reference) {
-                $result[] = $reference;
+                return $reference;
             }
         }
-        return References::fromArray($result);
+        return null;
     }
 }

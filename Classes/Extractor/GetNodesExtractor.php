@@ -5,10 +5,10 @@ namespace Sitegeist\CriQuel\Extractor;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Sitegeist\CriQuel\ExtractorInterface;
 
-class GetCount implements ExtractorInterface
+class GetNodesExtractor implements ExtractorInterface
 {
-    public function extract(Nodes $nodes): int
+    public function extract(Nodes $nodes): Nodes
     {
-        return $nodes->count();
+        return $nodes;
     }
 }

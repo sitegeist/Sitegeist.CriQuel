@@ -10,7 +10,7 @@ use Neos\ContentRepository\NodeAccess\FlowQueryOperations\CreateNodeHashTrait;
 use Sitegeist\CriQuel\ProcessorInterface;
 use Sitegeist\CriQuel\Query;
 
-class Remove implements ProcessorInterface
+class RemoveProcessor implements ProcessorInterface
 {
     use CreateNodeHashTrait;
 

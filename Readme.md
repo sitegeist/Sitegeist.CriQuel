@@ -13,15 +13,18 @@ Improvement in regards to flowQuery:
 
 ```php
 use Sitegeist\CriQuel\Query;
-use Sitegeist\CriQuel\Processor;
-use Sitegeist\CriQuel\Extractor;
+use Sitegeist\CriQuel\Processor\AddProcessor;
+use Sitegeist\CriQuel\Processor\RemoveProcessor;
+use Sitegeist\CriQuel\Processor\WithDescendantsProcessor;
+use Sitegeist\CriQuel\Processor\FilterProcessor;
+use Sitegeist\CriQuel\Extractor\GetPropertyExtractor;
 
 $result = Query::create($node)
-  ->chain(new Processor\Add($otherNode))
-  ->chain(new Processor\Remove($stuff))
-  ->chain(new Processor\WithDescendants('Neos.Neos:Document'))
-  ->chain(new Processor\Filter('Neos.Neos:Document', 'title *= "foo" OR title *= "bar"'))
-  ->extract(new Extractor\GetProperty("title"));
+  ->chain(new AddProcessor($otherNode))
+  ->chain(new RemoveProcessor($stuff))
+  ->chain(new WithDescendantsProcessor('Neos.Neos:Document'))
+  ->chain(new FilterProcessor('Neos.Neos:Document', 'title *= "foo" OR title *= "bar"'))
+  ->extract(new GetPropertyExtractor("title"));
 ```
 The equivalent fusion code would be:
 ```neosfusion
@@ -32,16 +35,20 @@ A more advanced example using taxonomy references could look like:
 
 ```php
 use Sitegeist\CriQuel\Query;
-use Sitegeist\CriQuel\Processor;
-use Sitegeist\CriQuel\Extractor;
+use Sitegeist\CriQuel\Processor\ReferencingNodesProcessor;
+use Sitegeist\CriQuel\Processor\WithDescendantsProcessor;
+use Sitegeist\CriQuel\Processor\ReferencedByNodesProcessor;
+use Sitegeist\CriQuel\Processor\UniqueProcessor;
+use Sitegeist\CriQuel\Processor\RemoveProcessor;
+use Sitegeist\CriQuel\Extractor\GetNodesExtractor;
 
 $result = Query::create($documentNode)
-  ->chain(new Processor\ReferencingNodes('taxonomyReferences', 'Sitegeist.Taxonomy:Taxonomy'))
-  ->chain(new Processor\WithDescendants('Sitegeist.Taxonomy:Taxonomy'))
-  ->chain(new Processor\ReferencedByNodes('taxonomyReferences', 'Neos.Neos:Document'))
-  ->chain(new Processor\Unique())
-  ->chain(new Processor\Remove($documentNode))
-  ->extract(new Extractor\GetNodes());
+  ->chain(new ReferencingNodesProcessor('taxonomyReferences', 'Sitegeist.Taxonomy:Taxonomy'))
+  ->chain(new WithDescendantsProcessor('Sitegeist.Taxonomy:Taxonomy'))
+  ->chain(new ReferencedByNodesProcessor('taxonomyReferences', 'Neos.Neos:Document'))
+  ->chain(new UniqueProcessor())
+  ->chain(new RemoveProcessor($documentNode))
+  ->extract(new GetNodesExtractor());
 ```
 The equivalent fusion code would be:
 ```neosfusion
@@ -54,29 +61,31 @@ similarDocuments = ${crql(documentNode).referencingNodes('taxonomyReferences', '
 
 are defined in the php namespace `Sitegeist\CriQuel\Processor`
 
-- `new Add(Nodes|Node|Query ...$items)` 
-- `new Remove(Nodes|Node|Query ...$items)` 
-- `new Unique()`
-- `new First()`
-- `new Last()`
-- `new Tethered(NodeName|string $name)`
-- `new Ancestors(NodeTypeConstraints|string $nodeTypeConstraints = null)`
-- `new WithAncestors(NodeTypeConstraints|string $nodeTypeConstraints = null)`
-- `new Descendants(NodeTypeConstraints|string $nodeTypeConstraints = null)`
-- `new WithDescendants(NodeTypeConstraints|string $nodeTypeConstraints = null)`
-- `new Children(NodeTypeConstraints|string $nodeTypeConstraints = null, PropertyValueCriteriaInterface|string $propertyValueCriteria)`
-- `new Filter(NodeTypeConstraints|string $nodeTypeConstraints = null, PropertyValueCriteriaInterface|string $propertyValueCriteria)`
-- `new ReferencingNodes(string|ReferenceName $referenceName = null, string|NodeTypeConstraints $nodeTypeConstraints = null, string|PropertyValueCriteriaInterface $nodePropertyValueCriteria= null, string|PropertyValueCriteriaInterface $referencePropertyValueCriteria = null)`
-- `new ReferencedByNodes(string|ReferenceName $referenceName = null, string|NodeTypeConstraints $nodeTypeConstraints = null, string|PropertyValueCriteriaInterface $nodePropertyValueCriteria= null, string|PropertyValueCriteriaInterface $referencePropertyValueCriteria = null)`
+- `new AddProcessor(Nodes|Node|Query ...$items)` 
+- `new RemoveProcessor(Nodes|Node|Query ...$items)`
+- `new ClosesetProcessor(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new ParentProcessor()`
+- `new UniqueProcessor()`
+- `new FirstProcessor()`
+- `new LastProcessor()`
+- `new TetheredProcessor(NodeName|string $name)`
+- `new AncestorsProcessor(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new WithAncestorsProcessor(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new DescendantsProcessor(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new WithDescendantsProcessor(NodeTypeConstraints|string $nodeTypeConstraints = null)`
+- `new ChildrenProcessor(NodeTypeConstraints|string $nodeTypeConstraints = null, PropertyValueCriteriaInterface|string $propertyValueCriteria)`
+- `new FilterProcessor(NodeTypeConstraints|string $nodeTypeConstraints = null, PropertyValueCriteriaInterface|string $propertyValueCriteria)`
+- `new ReferencingNodesProcessor(string|ReferenceName $referenceName = null, string|NodeTypeConstraints $nodeTypeConstraints = null, string|PropertyValueCriteriaInterface $nodePropertyValueCriteria= null, string|PropertyValueCriteriaInterface $referencePropertyValueCriteria = null)`
+- `new ReferencedByNodesProcessor(string|ReferenceName $referenceName = null, string|NodeTypeConstraints $nodeTypeConstraints = null, string|PropertyValueCriteriaInterface $nodePropertyValueCriteria= null, string|PropertyValueCriteriaInterface $referencePropertyValueCriteria = null)`
 
 ## Extractors
 
 are defined in the php namespace `Sitegeist\CriQuel\Extractor`
 
-- `new GetNodes(): Nodes`
-- `new GetNode(): ?Node`
-- `new GetReferences(string|ReferenceName $referenceName): References`
-- `new GetReference(string|ReferenceName $referenceName): ?Reference`
-- `new GetProperties(string $name): mixed[]`
-- `new GetProperty(string $name): mixed`
-- `new GetCount(): int`
+- `new GetNodesExtractor(): Nodes`
+- `new GetNodeExtractor(): ?Node`
+- `new GetReferencesExtractor(string|ReferenceName $referenceName): References`
+- `new GetReferenceExtractor(string|ReferenceName $referenceName): ?Reference`
+- `new GetPropertiesExtractor(string $name): mixed[]`
+- `new GetPropertyExtractor(string $name): mixed`
+- `new GetCountExtractor(): int`

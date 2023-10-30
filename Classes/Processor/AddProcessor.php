@@ -8,7 +8,7 @@ use Sitegeist\CriQuel\ProcessorInterface;
 use Sitegeist\CriQuel\Query;
 use Sitegeist\CriQuel\TransientOperationInterface;
 
-class Add implements ProcessorInterface
+class AddProcessor implements ProcessorInterface
 {
     private Nodes $nodes;
     public function __construct(Nodes|Node|Query ...$items)

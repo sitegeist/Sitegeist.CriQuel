@@ -13,7 +13,7 @@ use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\ProcessorInterface;
 
-class Children implements ProcessorInterface
+class ChildrenProcessor implements ProcessorInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;

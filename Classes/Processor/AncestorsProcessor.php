@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace Sitegeist\CriQuel\Processor;
 
-use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindSubtreeFilter;
+use Neos\ContentRepository\Core\NodeType\NodeTypeNames;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindAncestorNodesFilter;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindReferencesFilter;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
-use Neos\ContentRepository\Core\Projection\ContentGraph\Subtree;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
+use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\ProcessorInterface;
-use Sitegeist\CriQuel\Trait\FlattenSubtreeTrait;
+use Sitegeist\Taxonomy\Service\TaxonomyService;
 
-final class WithDescendants implements ProcessorInterface
+class AncestorsProcessor implements ProcessorInterface
 {
-    use FlattenSubtreeTrait;
-
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;
 
@@ -33,17 +34,19 @@ final class WithDescendants implements ProcessorInterface
 
     public function process(Nodes $nodes): Nodes
     {
-        $filter = FindSubtreeFilter::create(
-            $this->nodeTypeConstraints,
+        $findAncestorFilter = FindAncestorNodesFilter::create(
+            $this->nodeTypeConstraints
         );
-        $result = Nodes::createEmpty();
+
+        $ancestorNodesArray = [];
         foreach ($nodes as $node) {
             $subgraph = $this->crRegistry->subgraphForNode($node);
-            $subtree = $subgraph->findSubtree($node->nodeAggregateId, $filter);
-            if ($subtree instanceof Subtree) {
-                $result = $result->merge($this->flattenSubtree($subtree));
-            }
+            $ancestors = $subgraph->findAncestorNodes(
+                $node->nodeAggregateId,
+                $findAncestorFilter
+            );
+            $ancestorNodesArray[] = [$node, ...iterator_to_array($ancestors)];
         }
-        return $result;
+        return Nodes::fromArray(array_merge(...$ancestorNodesArray));
     }
 }

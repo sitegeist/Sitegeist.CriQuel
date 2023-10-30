@@ -6,7 +6,7 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\SharedModel\Node\PropertyName;
 use Sitegeist\CriQuel\ExtractorInterface;
 
-class GetProperty implements ExtractorInterface
+class GetPropertyExtractor implements ExtractorInterface
 {
     protected PropertyName $name;
     public function __construct(string|PropertyName $name)

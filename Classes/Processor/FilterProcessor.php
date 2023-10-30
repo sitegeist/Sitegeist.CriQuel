@@ -17,7 +17,7 @@ use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Sitegeist\CriQuel\ProcessorInterface;
 use Sitegeist\CriQuel\Matcher\NodeCriteriaMatcher;
 
-class Filter implements ProcessorInterface
+class FilterProcessor implements ProcessorInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;

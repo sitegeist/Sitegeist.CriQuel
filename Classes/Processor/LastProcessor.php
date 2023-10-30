@@ -5,7 +5,7 @@ namespace Sitegeist\CriQuel\Processor;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Sitegeist\CriQuel\ProcessorInterface;
 
-class Last implements ProcessorInterface
+class LastProcessor implements ProcessorInterface
 {
     public function process(Nodes $nodes): Nodes
     {

@@ -53,7 +53,7 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
 
     /**
      * This duplicates logic from the GetNodes extractor for beeing type safe accessible in php
-     * @see \Sitegeist\CriQuel\Extractor\GetNodes
+     * @see \Sitegeist\CriQuel\Extractor\GetNodesExtractor
      */
     public function get(): Nodes
     {
@@ -62,7 +62,7 @@ class Query implements ProtectedContextAwareInterface, \IteratorAggregate
 
     /**
      * This duplicates logic from the GetNode extractor for beeing type safe accessible in php
-     * @see \Sitegeist\CriQuel\Extractor\GetNode
+     * @see \Sitegeist\CriQuel\Extractor\GetNodeExtractor
      */
     public function first(): ?Node
     {

@@ -6,7 +6,7 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Sitegeist\CriQuel\ProcessorInterface;
 
-class First implements ProcessorInterface
+class FirstProcessor implements ProcessorInterface
 {
     public function process(Nodes $nodes): Nodes
     {

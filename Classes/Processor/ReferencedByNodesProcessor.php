@@ -16,7 +16,7 @@ use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
 use Sitegeist\CriQuel\ProcessorInterface;
 
-class ReferencedByNodes implements ProcessorInterface
+class ReferencedByNodesProcessor implements ProcessorInterface
 {
     #[Flow\Inject]
     protected ContentRepositoryRegistry $contentRepositoryRegistry;
