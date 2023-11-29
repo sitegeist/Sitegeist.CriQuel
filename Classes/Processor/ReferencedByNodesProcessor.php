@@ -10,7 +10,7 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Cri
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\PropertyValueCriteriaParser;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
-use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepository\Core\SharedModel\Node\ReferenceName;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
@@ -22,21 +22,21 @@ class ReferencedByNodesProcessor implements ProcessorInterface
     protected ContentRepositoryRegistry $contentRepositoryRegistry;
 
     protected ?ReferenceName $referenceName = null;
-    protected ?NodeTypeConstraints $nodeTypeConstraints = null;
+    protected ?NodeTypeCriteria $nodeTypeCriteria = null;
     protected ?PropertyValueCriteriaInterface $nodePropertyValueCriteria = null;
     protected ?PropertyValueCriteriaInterface $referencePropertyValueCriteria = null;
 
-    public function __construct(string|ReferenceName $referenceName = null, string|NodeTypeConstraints $nodeTypeConstraints = null, string|PropertyValueCriteriaInterface $nodePropertyValueCriteria = null, string|PropertyValueCriteriaInterface $referencePropertyValueCriteria = null)
+    public function __construct(string|ReferenceName $referenceName = null, string|NodeTypeCriteria $nodeTypeCriteria = null, string|PropertyValueCriteriaInterface $nodePropertyValueCriteria = null, string|PropertyValueCriteriaInterface $referencePropertyValueCriteria = null)
     {
         if (is_string($referenceName)) {
             $this->referenceName = ReferenceName::fromString($referenceName);
         } elseif ($referenceName instanceof ReferenceName) {
             $this->referenceName = $referenceName;
         }
-        if (is_string($nodeTypeConstraints)) {
-            $this->nodeTypeConstraints = NodeTypeConstraints::fromFilterString($nodeTypeConstraints);
-        } elseif ($nodeTypeConstraints instanceof NodeTypeConstraints) {
-            $this->nodeTypeConstraints = $nodeTypeConstraints;
+        if (is_string($nodeTypeCriteria)) {
+            $this->nodeTypeCriteria = NodeTypeCriteria::fromFilterString($nodeTypeCriteria);
+        } elseif ($nodeTypeCriteria instanceof NodeTypeCriteria) {
+            $this->nodeTypeCriteria = $nodeTypeCriteria;
         }
         if (is_string($nodePropertyValueCriteria)) {
             $this->nodePropertyValueCriteria = PropertyValueCriteriaParser::parse($nodePropertyValueCriteria);
@@ -54,7 +54,7 @@ class ReferencedByNodesProcessor implements ProcessorInterface
     {
         $findReferencesFilter = FindBackReferencesFilter::create(
             referenceName: $this->referenceName,
-            nodeTypeConstraints: $this->nodeTypeConstraints,
+            nodeTypes: $this->nodeTypeCriteria,
             nodePropertyValue: $this->nodePropertyValueCriteria,
             referencePropertyValue: $this->nodePropertyValueCriteria
         );

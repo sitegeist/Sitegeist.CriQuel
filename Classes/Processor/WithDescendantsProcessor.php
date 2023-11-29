@@ -6,7 +6,7 @@ namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindSubtreeFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
-use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Subtree;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
@@ -20,21 +20,21 @@ final class WithDescendantsProcessor implements ProcessorInterface
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;
 
-    protected ?NodeTypeConstraints $nodeTypeConstraints = null;
+    protected ?NodeTypeCriteria $nodeTypeCriteria = null;
 
-    public function __construct(NodeTypeConstraints|string $nodeTypeConstraints = null)
+    public function __construct(NodeTypeCriteria|string $nodeTypeCriteria = null)
     {
-        if (is_string($nodeTypeConstraints)) {
-            $this->nodeTypeConstraints = NodeTypeConstraints::fromFilterString($nodeTypeConstraints);
-        } elseif ($nodeTypeConstraints instanceof NodeTypeConstraints) {
-            $this->nodeTypeConstraints = $nodeTypeConstraints;
+        if (is_string($nodeTypeCriteria)) {
+            $this->nodeTypeCriteria = NodeTypeCriteria::fromFilterString($nodeTypeCriteria);
+        } elseif ($nodeTypeCriteria instanceof NodeTypeCriteria) {
+            $this->nodeTypeCriteria = $nodeTypeCriteria;
         }
     }
 
     public function process(Nodes $nodes): Nodes
     {
         $filter = FindSubtreeFilter::create(
-            $this->nodeTypeConstraints,
+            $this->nodeTypeCriteria,
         );
         $result = Nodes::createEmpty();
         foreach ($nodes as $node) {

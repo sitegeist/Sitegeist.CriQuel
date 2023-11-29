@@ -10,7 +10,7 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Cri
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\PropertyValueCriteriaParser;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
-use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepository\NodeAccess\FlowQueryOperations\CreateNodeHashTrait;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Flow\Annotations as Flow;
@@ -23,21 +23,21 @@ class ClosestProcessor implements ProcessorInterface
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;
 
-    protected NodeTypeConstraints $nodeTypeConstraints;
+    protected NodeTypeCriteria $nodeTypeCriteria;
 
-    public function __construct(NodeTypeConstraints|string $nodeTypeConstraints)
+    public function __construct(NodeTypeCriteria|string $nodeTypeCriteria)
     {
-        if (is_string($nodeTypeConstraints)) {
-            $this->nodeTypeConstraints = NodeTypeConstraints::fromFilterString($nodeTypeConstraints);
-        } elseif ($nodeTypeConstraints instanceof NodeTypeConstraints) {
-            $this->nodeTypeConstraints = $nodeTypeConstraints;
+        if (is_string($nodeTypeCriteria)) {
+            $this->nodeTypeCriteria = NodeTypeCriteria::fromFilterString($nodeTypeCriteria);
+        } elseif ($nodeTypeCriteria instanceof NodeTypeCriteria) {
+            $this->nodeTypeCriteria = $nodeTypeCriteria;
         }
     }
 
     public function process(Nodes $nodes): Nodes
     {
         $filter = FindClosestNodeFilter::create(
-            nodeTypeConstraints: $this->nodeTypeConstraints,
+            nodeTypes: $this->nodeTypeCriteria,
         );
 
         $results = [];

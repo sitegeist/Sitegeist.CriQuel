@@ -9,7 +9,7 @@ use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindAncestorNodes
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\FindReferencesFilter;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
-use Neos\ContentRepository\Core\Projection\ContentGraph\NodeTypeConstraints;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\Flow\Annotations as Flow;
@@ -21,21 +21,21 @@ class AncestorsProcessor implements ProcessorInterface
     #[Flow\Inject]
     protected ContentRepositoryRegistry $crRegistry;
 
-    protected ?NodeTypeConstraints $nodeTypeConstraints = null;
+    protected ?NodeTypeCriteria $nodeTypeCriteria = null;
 
-    public function __construct(NodeTypeConstraints|string $nodeTypeConstraints = null)
+    public function __construct(NodeTypeCriteria|string $nodeTypeCriteria = null)
     {
-        if (is_string($nodeTypeConstraints)) {
-            $this->nodeTypeConstraints = NodeTypeConstraints::fromFilterString($nodeTypeConstraints);
-        } elseif ($nodeTypeConstraints instanceof NodeTypeConstraints) {
-            $this->nodeTypeConstraints = $nodeTypeConstraints;
+        if (is_string($nodeTypeCriteria)) {
+            $this->nodeTypeCriteria = NodeTypeCriteria::fromFilterString($nodeTypeCriteria);
+        } elseif ($nodeTypeCriteria instanceof NodeTypeCriteria) {
+            $this->nodeTypeCriteria = $nodeTypeCriteria;
         }
     }
 
     public function process(Nodes $nodes): Nodes
     {
         $findAncestorFilter = FindAncestorNodesFilter::create(
-            $this->nodeTypeConstraints
+            $this->nodeTypeCriteria
         );
 
         $ancestorNodesArray = [];
