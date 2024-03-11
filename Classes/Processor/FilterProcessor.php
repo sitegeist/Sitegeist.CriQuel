@@ -6,13 +6,13 @@ namespace Sitegeist\CriQuel\Processor;
 
 use Neos\ContentRepository\Core\NodeType\ConstraintCheck;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\Criteria\PropertyValueCriteriaInterface;
+use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\PropertyValueCriteriaMatcher;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\PropertyValue\PropertyValueCriteriaParser;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Filter\NodeType\NodeTypeCriteria;
 use Neos\Flow\Annotations as Flow;
 use Neos\ContentRepositoryRegistry\ContentRepositoryRegistry;
 use Sitegeist\CriQuel\ProcessorInterface;
-use Sitegeist\CriQuel\Matcher\NodeCriteriaMatcher;
 
 class FilterProcessor implements ProcessorInterface
 {
@@ -44,7 +44,7 @@ class FilterProcessor implements ProcessorInterface
         foreach ($nodes as $node) {
             if (
                 ($nodeTypeConstraintCheck === null || $nodeTypeConstraintCheck->isNodeTypeAllowed($node->nodeTypeName))
-                && ($this->propertyValueCriteria === null || NodeCriteriaMatcher::matchesPropertyConstraint($node, $this->propertyValueCriteria))
+                && ($this->propertyValueCriteria === null || PropertyValueCriteriaMatcher::matchesNode($node, $this->propertyValueCriteria))
             ) {
                 $filteredNodes[] = $node;
             }

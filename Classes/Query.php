@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sitegeist\CriQuel;
 
+use Neos\Cache\Frontend\StringFrontend;
+use Neos\Cache\Frontend\VariableFrontend;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Node;
 use Neos\ContentRepository\Core\Projection\ContentGraph\Nodes;
 use Neos\Eel\ProtectedContextAwareInterface;
@@ -15,6 +17,9 @@ use Traversable;
  */
 class Query implements ProtectedContextAwareInterface, \IteratorAggregate
 {
+    #[Flow\InjectCache(identifier: 'Neos_Fusion_Content')]
+    protected StringFrontend $cache;
+
     #[FLow\Inject]
     protected OperationResolverInterface $operationResolver;
 
