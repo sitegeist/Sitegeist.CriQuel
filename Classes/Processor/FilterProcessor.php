@@ -39,11 +39,24 @@ class FilterProcessor implements ProcessorInterface
 
     public function process(Nodes $nodes): Nodes
     {
+        $constraints = [];
+        if ($this->nodeTypeCriteria !== null) {
+            foreach ($this->nodeTypeCriteria->explicitlyAllowedNodeTypeNames as $allowedNodeTypeName) {
+                $constraints[$allowedNodeTypeName->value] = true;
+            }
+            foreach ($this->nodeTypeCriteria->explicitlyDisallowedNodeTypeNames as $disallowedNodeTypeName) {
+                $constraints[$disallowedNodeTypeName->value] = false;
+            }
+        }
         $filteredNodes = [];
-        $nodeTypeConstraintCheck = $this->nodeTypeCriteria ? ConstraintCheck::create($this->nodeTypeCriteria) : null;
+        $nodeTypeConstraintCheck = (count($constraints) > 0) ? ConstraintCheck::create($constraints) : null;
+
+//        \Neos\Flow\var_dump($constraints);
+//        \Neos\Flow\var_dump($this->propertyValueCriteria);
+
         foreach ($nodes as $node) {
             if (
-                ($nodeTypeConstraintCheck === null || $nodeTypeConstraintCheck->isNodeTypeAllowed($node->nodeTypeName))
+                ($nodeTypeConstraintCheck === null || ($node->nodeType !== null && $nodeTypeConstraintCheck->isNodeTypeAllowed($node->nodeType)))
                 && ($this->propertyValueCriteria === null || PropertyValueCriteriaMatcher::matchesNode($node, $this->propertyValueCriteria))
             ) {
                 $filteredNodes[] = $node;

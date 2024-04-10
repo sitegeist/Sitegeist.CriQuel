@@ -33,7 +33,7 @@ class TetheredProcessor implements ProcessorInterface
         $nodeArray = [];
         foreach ($nodes as $node) {
             $subgraph = $this->crRegistry->subgraphForNode($node);
-            $tetheredNode = $subgraph->findChildNodeConnectedThroughEdgeName($node->nodeAggregateId, $this->name);
+            $tetheredNode = $subgraph->findNodeByPath($this->name, $node->nodeAggregateId);
             if ($tetheredNode instanceof Node) {
                 $nodeArray[] = $tetheredNode;
             }
